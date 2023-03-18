@@ -1,2 +1,56 @@
-<p>大家好</p>
-<p>这是我的个人网站</p>
+<html>
+<head>
+    <style>
+        #input {
+            width: 400px;
+            height: 300px;
+        }
+
+        #output {
+            width: 400px;
+            height: 300px;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>JSON Validator and Formatter</h1>
+    <p>Enter your JSON text in the input box and click the button to validate and format it.</p>
+    <textarea id="input"></textarea>
+    <button id="button">Validate and Format</button>
+    <div id="output"></div>
+
+    <script>
+        // Get the elements from the document
+        var input = document.getElementById("input");
+        var button = document.getElementById("button");
+        var output = document.getElementById("output");
+
+        // Define a function to validate and format the JSON text
+        function validateAndFormat() {
+            // Get the input value
+            var jsonText = input.value;
+
+            // Try to parse the JSON text
+            try {
+                var jsonObject = JSON.parse(jsonText);
+
+                // If no error is thrown, format the JSON text with indentation and highlight the keys
+                var formattedText = JSON.stringify(jsonObject, null, 4).replace(/"(\w+)":/g, '<span class="key">"$1":</span>');
+
+                // Display the formatted text in the output element
+                output.innerHTML = "<pre>" + formattedText + "</pre>";
+            } catch (error) {
+                // If an error is thrown, display it in the output element with red color
+                output.innerHTML = "<p class='error'>" + error.message + "</p>";
+            }
+        }
+
+        // Add an event listener to the button to call the function when clicked
+        button.addEventListener("click", validateAndFormat);
+    </script>
+</body>
+</html>
